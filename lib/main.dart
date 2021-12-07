@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:imc/home.dart';
+import 'package:imc/shared/theme/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Calculadora IMC',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-          primaryColor: Color(0xFF616161),
-          scaffoldBackgroundColor: Color(0xFF616161)),
+          primaryColor: AppColors.backgroundColor,
+          scaffoldBackgroundColor: AppColors.backgroundColor),
       home: Tela(),
     );
   }
