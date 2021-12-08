@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:imc/components/button/action_button.dart';
+import 'package:imc/components/button/fotter_button.dart';
 import 'package:imc/components/painel/conteudo.dart';
 import 'package:imc/components/painel/painel.dart';
-import 'package:imc/sexo.dart';
+import 'package:imc/result.dart';
+import 'package:imc/shared/utils/sexo.dart';
 import 'package:imc/shared/constantes/app_const.dart';
 import 'package:imc/shared/theme/app_colors.dart';
 
@@ -17,6 +20,8 @@ class Tela extends StatefulWidget {
 class _TelaState extends State<Tela> {
   Sexo? sexo;
   int initialValueSlider = 180;
+  int initialPeso = 60;
+  int initialIdade = 30;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,7 @@ class _TelaState extends State<Tela> {
                       children: [
                         Text(
                           initialValueSlider.toString(),
-                          style: AppConst.numeroTextStyle,
+                          style: AppConst.numberStyleConteudoPainel,
                         ),
                         Text(
                           'cm',
@@ -110,20 +115,118 @@ class _TelaState extends State<Tela> {
                 Expanded(
                   child: Painel(
                     color: AppColors.activeCard,
+                    card: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'PESO',
+                          style: AppConst.textStyleConteudoPainel,
+                        ),
+                        Text(
+                          initialPeso.toString(),
+                          style: AppConst.numberStyleConteudoPainel,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ActionButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                setState(() {
+                                  initialPeso--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            ActionButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState(() {
+                                  initialPeso++;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Painel(
                     color: AppColors.activeCard,
+                    card: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'IDADE',
+                          style: AppConst.textStyleConteudoPainel,
+                        ),
+                        Text(
+                          initialIdade.toString(),
+                          style: AppConst.numberStyleConteudoPainel,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ActionButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                if (initialIdade <= 10) {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                          title: const Text('Alerta'),
+                                          content: Text('Idade não pode ser menor que 10.'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                Navigator.pop(context),
+                                                child: const Text('Ok'),
+                                            ),
+                                          ],
+                                        ),
+                                  );
+                                }else{
+                                  setState(() {
+                                    initialIdade--;
+                                  });
+                                }
+
+                              },
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            ActionButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState(() {
+                                  initialIdade++;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ]),
             ),
-            Container(
-              color: AppColors.containerFotter,
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              height: AppConst.heigthtContainerFotter,
+            FotterButton(
+              title: 'CALCULAR',
+              onPress: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Result(),
+                  ),
+                );
+              },
             )
           ],
         ) // This trailing comma makes auto-formatting nicer for build methods.
