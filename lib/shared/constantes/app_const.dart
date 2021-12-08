@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AppConst{
+class AppConst {
   static const textStyleConteudoPainel = TextStyle(
     fontSize: 20,
     color: Colors.black,
   );
-  static final containerFotter    = Color(0xFFFF5822);
-  static final backgroundColor    = Color(0xFF616161);
+  static const heigthtContainerFotter = 80.0;
+
+  static const numeroTextStyle = TextStyle(
+    fontSize: 50,
+    fontWeight: FontWeight.w900,
+  );
 }
