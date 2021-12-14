@@ -7,7 +7,12 @@ import 'package:imc/shared/constantes/app_const.dart';
 import 'package:imc/shared/theme/app_colors.dart';
 
 class Result extends StatelessWidget {
-  const Result({Key? key}) : super(key: key);
+  Result(
+      {required this.imc, required this.resultado, required this.observacao});
+
+  final double imc;
+  final String resultado;
+  final String observacao;
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +45,15 @@ class Result extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'NORMAL',
+                    resultado.toUpperCase(),
                     style: AppConst.textStyleResult,
                   ),
                   Text(
-                    '18.4',
+                    imc.toStringAsFixed(1),
                     style: AppConst.textStyleIMC,
                   ),
                   Text(
-                    'O seu IMC esta baixo. Você precisa comer mais!',
+                    observacao,
                     textAlign: TextAlign.center,
                     style: AppConst.textStyleIMCMessage,
                   )
@@ -57,9 +62,7 @@ class Result extends StatelessWidget {
             ),
           ),
           FotterButton(
-            title: 'RECALCULAR',
-            onPress: () => Navigator.pop(context)
-          )
+              title: 'RECALCULAR', onPress: () => Navigator.pop(context))
         ],
       ),
     );

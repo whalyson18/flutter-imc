@@ -5,6 +5,7 @@ import 'package:imc/components/button/action_button.dart';
 import 'package:imc/components/button/fotter_button.dart';
 import 'package:imc/components/painel/conteudo.dart';
 import 'package:imc/components/painel/painel.dart';
+import 'package:imc/model/imc.dart';
 import 'package:imc/result.dart';
 import 'package:imc/shared/utils/sexo.dart';
 import 'package:imc/shared/constantes/app_const.dart';
@@ -18,7 +19,7 @@ class Tela extends StatefulWidget {
 }
 
 class _TelaState extends State<Tela> {
-  Sexo? sexo;
+  Sexo sexo = Sexo.masculino;
   int initialValueSlider = 180;
   int initialPeso = 60;
   int initialIdade = 30;
@@ -38,6 +39,7 @@ class _TelaState extends State<Tela> {
                 Expanded(
                   child: Painel(
                     onPress: () {
+                      print(sexo);
                       setState(() {
                         sexo = Sexo.masculino;
                       });
@@ -54,6 +56,7 @@ class _TelaState extends State<Tela> {
                 Expanded(
                   child: Painel(
                     onPress: () {
+                      print(sexo);
                       setState(() {
                         sexo = Sexo.feminino;
                       });
@@ -179,23 +182,23 @@ class _TelaState extends State<Tela> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
-                                          title: const Text('Alerta'),
-                                          content: Text('Idade não pode ser menor que 10.'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () =>
-                                                Navigator.pop(context),
-                                                child: const Text('Ok'),
-                                            ),
-                                          ],
+                                      title: const Text('Alerta'),
+                                      content: Text(
+                                          'Idade não pode ser menor que 10.'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: const Text('Ok'),
                                         ),
+                                      ],
+                                    ),
                                   );
-                                }else{
+                                } else {
                                   setState(() {
                                     initialIdade--;
                                   });
                                 }
-
                               },
                             ),
                             SizedBox(
@@ -220,10 +223,19 @@ class _TelaState extends State<Tela> {
             FotterButton(
               title: 'CALCULAR',
               onPress: () {
+                Imc imc = Imc(
+                    idade: initialIdade,
+                    sexo: sexo,
+                    altura: initialValueSlider,
+                    peso: initialPeso);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Result(),
+                    builder: (context) => Result(
+                      imc: imc.imc(),
+                      resultado: imc.resultado(),
+                      observacao: imc.observacao(),
+                    ),
                   ),
                 );
               },
